@@ -1,0 +1,327 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Price Prediction Model</title>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+  <style>
+    body{
+      background-color: black;
+    }
+    main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 100px; /* Add a 20px margin at the bottom of the main section */
+  }
+    header {
+      background-color: #333; /* You can change the background color to your preference */
+      padding: 10px 0;
+      position: sticky;
+      top: 0;
+      z-index: 1000; /* To make sure the header stays on top of other elements */
+    }
+
+    .header-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: justify;
+      font-size: 25px;
+      
+      padding: 0 20px;
+    }
+
+    .logo {
+      font-size: 30px;
+      font-weight: bold;
+      color: white;
+      text-decoration: aqua;
+    }
+
+    .nav-links {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: flex;
+    }
+
+    .nav-links li {
+      margin-left: 30px;
+    }
+
+    .nav-links li a {
+      color: white;
+      text-decoration: none;
+    }
+
+    .nav-links li a:hover {
+      color: #1eb635;
+    }
+
+
+    
+
+    h1 {
+      font-size: 36px;
+      text-align: center;
+      margin-top: 30px;
+      margin-bottom: 30px;
+    }
+
+    .box-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .box {
+      width: 300px;
+      height: 300px;
+      position: relative;
+      overflow: hidden;
+      border-radius: 10px;
+      background-color: aliceblue;
+      text-align: center;
+      padding: 20px;
+      margin: 20px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    }
+    .box a {
+      display: block;
+      width: 100%;
+      height: 100%;
+      
+    }
+    .box img {
+      width: 100%;
+      height: 100%;
+      
+      object-fit: cover;
+      transition: transform 0.2s, opacity 0.2s;
+      
+    }
+
+    .box img:hover {
+    transform: scale(1.1); /* Increase the image size by 10% on hover */
+    opacity: 0.8; /* Reduce opacity to 80% on hover */
+    }
+
+   
+
+
+
+    
+
+    
+
+    
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+body{
+  line-height: 1.5;
+  font-family: 'Poppins', sans-serif;
+}
+*{
+  margin:0;
+  padding:0;
+  box-sizing: border-box;
+}
+.container{
+  max-width: 1170px;
+  margin:auto;
+}
+.row{
+  display: flex;
+  flex-wrap: wrap;
+}
+ul{
+  list-style: none;
+}
+.footer{
+  background-color: #24262b;
+    padding: 70px 0;
+}
+.footer-col{
+   width: 25%;
+   padding: 0 15px;
+}
+.footer-col h4{
+  font-size: 18px;
+  color: #ffffff;
+  text-transform: capitalize;
+  margin-bottom: 35px;
+  font-weight: 500;
+  position: relative;
+}
+.footer-col h4::before{
+  content: '';
+  position: absolute;
+  left:0;
+  bottom: -10px;
+  background-color: #e91e63;
+  height: 2px;
+  box-sizing: border-box;
+  width: 50px;
+}
+.footer-col ul li:not(:last-child){
+  margin-bottom: 10px;
+}
+.footer-col ul li a{
+  font-size: 20px;
+  text-transform: capitalize;
+  color: #ffffff;
+  text-decoration: none;
+  font-weight: 300;
+  color: #bbbbbb;
+  display: block;
+  transition: all 0.3s ease;
+}
+.footer-col ul li a:hover{
+  color: #ffffff;
+  padding-left: 8px;
+}
+.footer-col .social-links a{
+  display: inline-block;
+  height: 40px;
+  width: 40px;
+  background-color: rgba(255,255,255,0.2);
+  margin:0 10px 10px 0;
+  text-align: center;
+  line-height: 40px;
+  border-radius: 50%;
+  color: #ffffff;
+  transition: all 0.5s ease;
+}
+.footer-col .social-links a:hover{
+  color: #24262b;
+  background-color: #ffffff;
+}
+
+/*responsive*/
+@media(max-width: 767px){
+  .footer-col{
+    width: 50%;
+    margin-bottom: 30px;
+}
+}
+@media(max-width: 574px){
+  .footer-col{
+    width: 100%;
+}
+}
+
+    
+  </style>
+</head>
+
+<body>
+  <header>
+    <div class="header-content">
+      <a class="logo" href="/">Price Prediction Model</a>
+      <ul class="nav-links">
+        <li><a href="/">Home</a></li>
+        <li><a href="/vehicles">Vehicles</a></li>
+        <li><a href="/electronics">Electronics</a></li>
+        <li><a href="https://github.com/abhint1/Machine-Learning-Project/tree/main">Source Code</a></li>
+      </ul>
+    </div>
+  </header>
+  <main>
+  <h1 style="font-size: 36px; text-align: center; margin-top: 30px; margin-bottom: 30px; font-family: Algerian, Arial, sans-serif; color:white">Price Prediction Models</h1>
+  <div class="box-container">
+    <div>
+    <div class="box">
+      <a href="/car_form">
+        <img src="https://thecleverprogrammer.com/wp-content/uploads/2020/09/un-76.png" alt="Car Form">
+      </a>
+    </div>
+    <h2 style="text-align: center; width: 300px; color: white;font-size: 36px; text-align: center; margin-top: 30px; margin-bottom: 30px; font-family: Robot Slab; color:white">
+      <a href="/car_form">Car Price Prediction</a>
+    </h2>
+  </div>
+    <div>
+    <div class="box">
+      <a href="/mobile_form">
+        <img src="https://th.bing.com/th/id/OIP.dZ-X0fUajai5-w8N6a21IQHaEh?pid=ImgDet&rs=1" alt="Mobile Form">
+      </a>
+    </div>
+    <h2 style="text-align: center; width: 300px; color: white;font-size: 36px; text-align: center; margin-top: 30px; margin-bottom: 30px; font-family: Robot Slab; color:white">
+      <a href="/mobile_form">Mobile Price Prediction</a>
+    </h2>
+  </div>
+  </div>
+
+  <div class="box-container">
+    <div>
+    <div class="box">
+      <a href="/laptop_form">
+        <img src="https://th.bing.com/th/id/OIG..UiSQLYa7mkJiXl_HkC_?pid=ImgGn" alt="Laptop Form">
+      </a>
+    </div>
+    <h2 style="text-align: center; width: 300px; color: white;font-size: 36px; text-align: center; margin-top: 30px; margin-bottom: 30px; font-family: Robot Slab; color:white">
+      <a href="/laptop_form">Laptop Price Prediction</a>
+    </h2>
+  </div>
+
+    <div>
+    <div class="box">
+      <a href="/bike_form">
+        <img src="https://www.motorcyclistonline.com/resizer/fQ5hjLc4PMRxz3-6yLPYfXUQINU=/1200x628/smart/arc-anglerfish-arc2-prod-bonnier.s3.amazonaws.com/public/MSF3PWPFSJD2PEURFG7IMT4APQ.jpg" alt="Laptop Form">
+      </a>
+    </div>
+    <h2 style="text-align: center; width: 300px; color: white;font-size: 36px; text-align: center; margin-top: 30px; margin-bottom: 30px; font-family: Robot Slab; color:white">
+      <a href="/bike_form">Bike Price Prediction</a>
+    </h2>
+  </div>
+  </div>
+</main>
+<div>
+
+</div>
+<footer class="footer">
+  <div class="container">
+   <div class="row">
+     <div class="footer-col">
+       <h4>Machine Learning Models</h4>
+       <ul>
+         <li><a href="/car_form">Car Price Prediction</a></li>
+         <li><a href="/mobile_form">Bike Price Prediction</a></li>
+         <li><a href="/laptop_form">Mobile Price Prediction</a></li>
+         <li><a href="/bike_form">Laptop Price Prediction</a></li>
+       </ul>
+     </div>
+     <div class="footer-col">
+       <h4>Source Codes</h4>
+       <ul>
+         <li><a href="https://github.com/abhint1/Machine-Learning-Project/blob/main/ML%20MODEL%20PROJECT/cpp/Car%20price%20Predictor.ipynb">Car</a></li>
+         <li><a href="https://github.com/abhint1/Machine-Learning-Project/blob/main/ML%20MODEL%20PROJECT/cpp/Bike_Model.ipynb">Bike</a></li>
+         <li><a href="https://github.com/abhint1/Machine-Learning-Project/blob/main/ML%20MODEL%20PROJECT/cpp/Mobile%20Price%20Prediction.ipynb">Mobile</a></li>
+         <li><a href="https://github.com/abhint1/Machine-Learning-Project/blob/main/ML%20MODEL%20PROJECT/cpp/laptop_price_predictor.ipynb">Laptop</a></li>
+       </ul>
+     </div>
+     <div class="footer-col">
+       
+     </div>
+     <div class="footer-col">
+  <h4>follow us</h4>
+  <div class="social-links">
+    <!-- Replace "#" with your LinkedIn profile URL -->
+    <a href="https://www.linkedin.com/in/abhishek-nath-tiwari/" target="_blank">
+      <i class="fa-brands fa-linkedin fa-2xl"></i>
+    </a>
+    <!-- Replace "#" with your Twitter profile URL -->
+    <a href="https://github.com/abhint1" target="_blank">
+      <i class="fa-brands fa-github fa-2xl"></i>
+    </a>
+    <!-- Add more social media links if needed -->
+  </div>
+</div>
+   </div>
+  </div>
+</footer>
+</body>
+</html>

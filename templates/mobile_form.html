@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Mobile Price Prediction</title>
+    <style>
+        body{
+            background-color: black;
+        }
+        
+        #container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+       
+        #prediction-form {
+            width: 400px; /* Adjust the width as per your preference */
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+
+        /* Style for labels */
+        label {
+            margin: 5px 0;
+            font-size: 18px;
+        }
+
+        /* Style for input elements */
+        input[type="number"],
+        input[type="checkbox"],
+        select {
+            width: 100%;
+            padding: 8px;
+            margin: 5px 0;
+            box-sizing: border-box;
+            
+            
+        }
+
+        /* Style for Predict Price button */
+        input[type="submit"] {
+            width: 100%;
+            height: 40px;
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 18px;
+            
+        }
+
+        input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+
+        /* Style for result div */
+        #result {
+            margin-top: 20px;
+            text-align: center;
+        }
+    
+
+        #prediction-result {
+            margin-top: 20px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div id="container">
+        <h1 style="text-align: center; color:white">Mobile Price Prediction</h1>
+        <form id="prediction-form">
+            <label for="battery_power">Battery Power:</label>
+            <input type="number" name="battery_power" required><br>
+
+            <label for="clock_speed">Clock Speed:</label>
+            <input type="number" name="clock_speed" step="0.1" required><br>
+
+            <label for="fc">Front Camera (MegaPixels):</label>
+            <input type="number" name="fc" required><br>
+
+            <label for="four_g">4G Supported (0 or 1):</label>
+            <input type="number" name="four_g" min="0" max="1" required><br>
+
+            <label for="int_memory">Internal Memory:</label>
+            <input type="number" name="int_memory" required><br>
+
+            <label for="m_dep">Mobile Depth:</label>
+            <input type="number" name="m_dep" step="0.1" required><br>
+
+            <label for="mobile_wt">Mobile Weight:</label>
+            <input type="number" name="mobile_wt" required><br>
+
+            <label for="n_cores">Number of Cores:</label>
+            <input type="number" name="n_cores" required><br>
+
+            <label for="pc">Primary Camera (MegaPixels):</label>
+            <input type="number" name="pc" required><br>
+
+            <label for="px_height">Pixel Height:</label>
+            <input type="number" name="px_height" required><br>
+
+            <label for="px_width">Pixel Width:</label>
+            <input type="number" name="px_width" required><br>
+
+            <label for="ram">RAM (MB):</label>
+            <input type="number" name="ram" required><br>
+
+            <label for="sc_h">Screen Height:</label>
+            <input type="number" name="sc_h" required><br>
+
+            <label for="sc_w">Screen Width:</label>
+            <input type="number" name="sc_w" required><br>
+
+            <label for="talk_time">Talk Time (hours):</label>
+            <input type="number" name="talk_time" required><br>
+
+            <input type="submit" value="Predict Price">
+
+            
+        </form>
+
+        <p id="prediction-result" style="color: white; font-size: 36px;"></p>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        // jQuery AJAX request to Flask backend
+        $('#prediction-form').submit(function(event) {
+            event.preventDefault();
+
+            // Set values of wifi, three_g, touch_screen, blue, and dual_sim to 1
+            const data = $(this).serializeArray();
+            data.push({ name: 'wifi', value: '1' });
+            data.push({ name: 'three_g', value: '1' });
+            data.push({ name: 'touch_screen', value: '1' });
+            data.push({ name: 'blue', value: '1' });
+            data.push({ name: 'dual_sim', value: '1' });
+
+            $.ajax({
+                type: 'POST',
+                url: '/predictmobile',
+                data: data,
+
+                success: function(response) {
+
+                    
+                    const predictedPriceLog = parseFloat(response);
+                    const predictedPriceActual = 100*(Math.exp(predictedPriceLog));
+
+
+                // Display the result with the actual price
+                $('#prediction-result').text('Predicted Price: ' + predictedPriceActual.toFixed(2));
+
+                },
+                error: function(error) {
+                    console.error('Error:', error);
+                }
+            });
+        });
+
+
+        
+
+        
+    </script>
+</body>
+</html>

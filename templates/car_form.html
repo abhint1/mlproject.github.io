@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Car Price Prediction</title>
+  <style>
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      background-color: black;
+       /* Set the background color to black */
+      color: white; /* Set the text color to white */
+      font-size: 20px; /* Set a larger font size */
+    }
+
+    #container {
+      width: 500px; /* Increase the width of the container */
+      padding: 20px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      background-color: #222; /* Dark gray background for the container */
+    }
+
+    #carForm {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    #carForm label {
+      font-weight: bold;
+      font-size: 24px; /* Increase the font size for input labels */
+    }
+
+    #carForm input, #carForm select {
+      padding: 10px; /* Increase the padding for inputs */
+      font-size: 18px; /* Increase the font size for inputs */
+      background-color: #333; /* Dark gray background for input fields */
+      color: white; /* Set the text color to white for inputs */
+    }
+
+    #result {
+      margin-top: 20px;
+      font-weight: bold;
+      font-size: 24px; /* Increase the font size for the result */
+    }
+  </style>
+</head>
+<body>
+  <div id="container">
+    <h1>Car Price Prediction</h1>
+    <form id="carForm">
+      <label for="name">Car Name:</label>
+      <select id="name" name="name" required>
+        <!-- Dropdown options for car names will be populated dynamically -->
+      </select>
+
+      <label for="company">Company:</label>
+      <select id="company" name="company" required>
+        <!-- Dropdown options for company names will be populated dynamically -->
+      </select>
+
+      <label for="year">Year:</label>
+      <input type="number" id="year" name="year" required>
+
+      <label for="kms_driven">Kilometers Driven:</label>
+      <input type="number" id="kms_driven" name="kms_driven" required>
+
+      <label for="fuel_type">Fuel Type:</label>
+      <select id="fuel_type" name="fuel_type" required>
+        <!-- Dropdown options for fuel types will be populated dynamically -->
+      </select>
+
+      <input type="button" value="Predict Price" onclick="predictPrice()">
+    </form>
+
+    <div id="result"></div>
+  </div>
+
+  <script>
+    // Function to populate dropdown options dynamically
+    function populateDropdown(id, data) {
+      const dropdown = document.getElementById(id);
+      for (let item of data) {
+        let option = document.createElement("option");
+        option.text = item;
+        dropdown.add(option);
+      }
+    }
+
+    // Fetch the unique values for dropdown options from the Flask app
+    fetch("/get_dropdown_options")
+      .then((response) => response.json())
+      .then((data) => {
+        populateDropdown("name", data.names);
+        populateDropdown("company", data.companies);
+        populateDropdown("fuel_type", data.fuel_types);
+      })
+      .catch((error) => console.error("Error:", error));
+
+      function predictPrice() {
+    // Get form data
+    var formData = new FormData(document.getElementById("carForm"));
+    var data = {};
+    formData.forEach(function (value, key) {
+      data[key] = value;
+    });
+
+    // Send data to the Flask app for prediction
+    fetch("/predict", {
+      method: "POST",
+      body: JSON.stringify(data),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then(function (response) {
+        return response.json();
+      })
+      .then(function (data) {
+        document.getElementById("result").innerText =
+          "Predicted Price: " + data.price;
+      })
+      .catch(function (error) {
+        console.error("Error:", error);
+      });
+  }
+  </script>
+</body>
+</html>
